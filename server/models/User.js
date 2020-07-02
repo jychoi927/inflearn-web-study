@@ -34,7 +34,6 @@ const userSchema = mongoose.Schema({
 })
 userSchema.pre('save', function( next ){
     var user = this
-    console.log(user)
     if(user.isModified('password')) {
         bcrypt.genSalt(saltRounds, function(err, salt) {
             if(err) return next(err)
@@ -58,7 +57,6 @@ userSchema.methods.comparePassword = function(plainPassword, cb) {
 
 userSchema.methods.generateToken = function(cb) {
     var user = this
-    console.log(user)
     var token = jwt.sign(user._id.toHexString(), 'secretToken')
 
     user.token = token
